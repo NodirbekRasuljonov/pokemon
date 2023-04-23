@@ -15,3 +15,7 @@ class HomeLoadingPageState extends HomePageState {
 class HomeErrorState extends HomePageState {
   HomeErrorState();
 }
+
+class HomeDoneState extends HomePageState{
+  HomeDoneState();
+}
