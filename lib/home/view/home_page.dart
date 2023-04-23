@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon/constants/color_const.dart';
@@ -22,11 +20,13 @@ class _HomePageState extends State<HomePage> {
       appBar: appBar(),
       body: BlocConsumer<HomePageCubit, HomePageState>(
         builder: (context, state) {
-          return FutureBuilder<PokemonModel>(
+          return FutureBuilder(
             future: context.read<HomePageCubit>().getData(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return CircularProgressIndicator.adaptive();
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
               } else if (snapshot.hasData) {
                 PokemonModel data = snapshot.data;
                 return ListView.builder(
@@ -59,18 +59,41 @@ class _HomePageState extends State<HomePage> {
                                     right: 20.w,
                                     bottom: 20.h,
                                     child: Container(
-                                      height: 60.h,
-                                      width: 150.w,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.r),
-                                        color:
-                                            AppColorConst.kInfoBackgroundColor,
-                                      ),
-                                      child: Text(
-                                        snapshot.data!.results[index].name,
-                                      ),
-                                    ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 15.w),
+                                        height: 60.h,
+                                        width: 150.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.r),
+                                          color: AppColorConst
+                                              .kInfoBackgroundColor,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              index < 10
+                                                  ? "#00$index"
+                                                  : "#0$index",
+                                              style: TextStyle(
+                                                  color: AppColorConst
+                                                      .kbackgroundColor,
+                                                  fontSize: 20.sp,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
+                                            Text(
+                                              "${data.results![index].name![0].toUpperCase()}${data.results![index].name!.substring(1)}",
+                                              style: TextStyle(
+                                                color:
+                                                    AppColorConst.kWhiteColor,
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            )
+                                          ],
+                                        )),
                                   ),
                                 ],
                               ),
@@ -81,9 +104,13 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 );
-              } else {
+              } else if (snapshot.hasError) {
                 return Center(
                   child: Text("Error"),
+                );
+              } else {
+                return Center(
+                  child: Text("SAlom"),
                 );
               }
             },

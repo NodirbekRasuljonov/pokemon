@@ -7,7 +7,6 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(HomeInitialPageState());
 
   Future<PokemonModel> getData() async {
-
     Response res = await Dio().get("https://pokeapi.co/api/v2/pokemon");
     return PokemonModel.fromJson(res.data);
   }
