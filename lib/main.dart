@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon/home/cubit/home_cubit.dart';
 import 'package:pokemon/home/view/home_page.dart';
+import 'package:pokemon/routes/app_routes.dart';
 
 void main() {
   runApp(
@@ -12,7 +13,7 @@ void main() {
           create: (context) => HomePageCubit(),
         )
       ],
-      child:const MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -28,13 +29,13 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          onGenerateRoute: AppRoute.onGenerateRoute,
+          initialRoute: "/home",
           debugShowCheckedModeBanner: false,
           title: 'Pokemon',
           theme: ThemeData.light(),
-          home: child,
         );
       },
-      child: const HomePage(),
     );
   }
 }
