@@ -5,4 +5,5 @@ class AppColorConst{
   static Color kTransparentColor=Colors.transparent;
   static Color kInfoBackgroundColor=Color(0xff676767);
   static Color kWhiteColor=Colors.white;
+  static Color kBlackColor=Colors.black;
 }
