@@ -15,7 +15,6 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   Future<PokemonInfoModel> getInfoPokemon({required int index}) async {
     Response res = await Dio().get("https://pokeapi.co/api/v2/pokemon/$index/");
-    print(res.data["height"]);
     return PokemonInfoModel.fromJson(res.data);
   }
 }
