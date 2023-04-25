@@ -38,8 +38,10 @@ class _InfoPageState extends State<InfoPage> {
                 .getInfoPokemon(index: widget.index),
             builder: (context, AsyncSnapshot<PokemonInfoModel> snapshot) {
               if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppColorConst.kbackgroundColor,
+                  ),
                 );
               } else if (snapshot.hasError) {
                 return const Center(
@@ -184,8 +186,7 @@ class _InfoPageState extends State<InfoPage> {
         height: 220.h,
         width: 289.w,
         child: CachedNetworkImage(
-          imageUrl: 
-          pokemonInfo.sprites!.frontDefault.toString(),
+          imageUrl: pokemonInfo.sprites!.frontDefault.toString(),
           fit: BoxFit.contain,
         ),
       ),

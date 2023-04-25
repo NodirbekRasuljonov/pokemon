@@ -39,6 +39,8 @@ dependencies:
   flutter_bloc: ^8.1.2
   flutter_screenutil: ^5.7.0
   cached_network_image: ^3.2.3
+  connectivity_plus: ^3.0.4
+  internet_connection_checker: ^1.0.0+1
   
 
 dev_dependencies:

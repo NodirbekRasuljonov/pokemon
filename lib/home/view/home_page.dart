@@ -37,8 +37,10 @@ class _HomePageState extends State<HomePage> {
             future: context.read<HomePageCubit>().getPokemon(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
+                return  Center(
+                  child: CircularProgressIndicator(
+                    color: AppColorConst.kbackgroundColor,
+                    ),
                 );
               } else if (snapshot.hasData) {
                 PokemonModel data = snapshot.data;
