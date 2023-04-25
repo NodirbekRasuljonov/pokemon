@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon/constants/color_const.dart';
 import 'package:pokemon/home/cubit/home_cubit.dart';
 import 'package:pokemon/home/state/home_page_state.dart';
@@ -16,105 +17,128 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+   bool hasInternet=true;
+
+  @override
+  void initState() {
+    InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternet = status == InternetConnectionStatus.connected;
+      setState(() => this.hasInternet = hasInternet);
+    });
+    print(hasInternet);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorConst.kWhiteColor,
-      appBar: AppBar(
-        backgroundColor: AppColorConst.kbackgroundColor,
-        elevation: 0.0,
-        centerTitle: true,
-        title: Text(
-          "Pokemon Info",
-          style: TextStyle(color: AppColorConst.kWhiteColor),
+        backgroundColor: AppColorConst.kWhiteColor,
+        appBar: AppBar(
+          backgroundColor: AppColorConst.kbackgroundColor,
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text(
+            "Pokemon Info",
+            style: TextStyle(color: AppColorConst.kWhiteColor),
+          ),
         ),
-      ),
-      body: BlocConsumer<HomePageCubit, HomePageState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return FutureBuilder<PokemonInfoModel>(
-            future: context
-                .read<HomePageCubit>()
-                .getInfoPokemon(index: widget.index),
-            builder: (context, AsyncSnapshot<PokemonInfoModel> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColorConst.kbackgroundColor,
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Error"),
-                );
-              } else {
-                PokemonInfoModel pokemonInfo = snapshot.data!;
-                return Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 350.h,
-                        width: 400.w,
-                        child: Stack(
-                          children: [
-                            nameId(pokemonInfo),
-                            Positioned(
-                              bottom: 0.h,
-                              left: 0.w,
-                              right: 0.w,
-                              child: Container(
-                                  height: 230.h,
-                                  width: 400.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30.r),
-                                    color: AppColorConst.kbackgroundColor,
-                                  ),
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 30.w),
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        top: 130.h,
-                                        left: 20.w,
-                                        right: 20.w,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            details(
-                                                title: "Height",
-                                                value: pokemonInfo.height
-                                                    .toString()),
-                                            details(
-                                                title: "Weight",
-                                                value: pokemonInfo.weight
-                                                    .toString()),
-                                            details(
-                                                title: "Category",
-                                                value: pokemonInfo
-                                                    .types![0].type!.name
-                                                    .toString()),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                            image(pokemonInfo),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              }
-            },
-          );
-        },
-      ),
-    );
+        body: hasInternet
+            ? BlocConsumer<HomePageCubit, HomePageState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  return FutureBuilder<PokemonInfoModel>(
+                    future: context
+                        .read<HomePageCubit>()
+                        .getInfoPokemon(index: widget.index),
+                    builder:
+                        (context, AsyncSnapshot<PokemonInfoModel> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColorConst.kbackgroundColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return const Center(
+                          child: Text("Error"),
+                        );
+                      } else {
+                        PokemonInfoModel pokemonInfo = snapshot.data!;
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 20.h),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 350.h,
+                                width: 400.w,
+                                child: Stack(
+                                  children: [
+                                    nameId(pokemonInfo),
+                                    Positioned(
+                                      bottom: 0.h,
+                                      left: 0.w,
+                                      right: 0.w,
+                                      child: Container(
+                                          height: 230.h,
+                                          width: 400.w,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30.r),
+                                            color:
+                                                AppColorConst.kbackgroundColor,
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 30.w),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 130.h,
+                                                left: 20.w,
+                                                right: 20.w,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    details(
+                                                        title: "Height",
+                                                        value: pokemonInfo
+                                                            .height
+                                                            .toString()),
+                                                    details(
+                                                        title: "Weight",
+                                                        value: pokemonInfo
+                                                            .weight
+                                                            .toString()),
+                                                    details(
+                                                        title: "Category",
+                                                        value: pokemonInfo
+                                                            .types![0]
+                                                            .type!
+                                                            .name
+                                                            .toString()),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                    ),
+                                    image(pokemonInfo),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+              )
+            : Center(
+                child: Text("No Internet"),
+              ));
   }
 
   Column details({required String title, required String value}) {
