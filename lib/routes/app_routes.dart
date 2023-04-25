@@ -4,7 +4,8 @@ import 'package:pokemon/home/view/home_page.dart';
 import 'package:pokemon/home/view/info_page.dart';
 
 class AppRoute {
-  static Route? onGenerateRoute(RouteSettings s) {
+  
+  Route? onGenerateRoute(RouteSettings s) {
     var args = s.arguments;
     switch (s.name) {
       case "/info":

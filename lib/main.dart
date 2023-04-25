@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon/home/cubit/home_cubit.dart';
-import 'package:pokemon/home/view/home_page.dart';
 import 'package:pokemon/routes/app_routes.dart';
 
 void main() {
@@ -28,8 +27,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          onGenerateRoute: AppRoute.onGenerateRoute,
+        AppRoute route=AppRoute()
+;        return MaterialApp(
+          onGenerateRoute: route.onGenerateRoute,
           initialRoute: "/home",
           debugShowCheckedModeBanner: false,
           title: 'Pokemon',
