@@ -22,17 +22,17 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   Future<PokemonInfoModel> getInfoPokemon({required int index}) async {
     Response res = await Dio().get("https://pokeapi.co/api/v2/pokemon/$index/");
-    // box.put(
-    //     "pokemonInfo",
-    //     HivePokemonInfo(
-    //         id: res.data["id"],
-    //         name: res.data["name"],
-    //         imageUrl: res.data["spirites"]["frontDefault"],
-    //         height: res.data["height"],
-    //         weight: res.data["weight"],
-    //         category: res.data["types"][0]["type"]["name"]));
-    
-    
+    box.put(
+        "pokemonInfo",
+        HivePokemonInfo(
+                id: res.data["id"].toString(),
+                name: res.data["name"].toString(),
+                imageUrl: res.data["sprites"]["front_default"].toString(),
+                height: res.data["height"].toString(),
+                weight: res.data["weight"].toString(),
+                category: res.data["types"][0]["type"]["name"])
+            .toString());
+    print(box.get("hiveModel"));
     return PokemonInfoModel.fromJson(res.data);
   }
 }
