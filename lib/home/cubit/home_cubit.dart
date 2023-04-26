@@ -12,27 +12,43 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(HomeInitialPageState());
 
   Box box = Hive.box("hive");
-  Future<PokemonModel> getPokemon() async {
-    Response res = await Dio().get("https://pokeapi.co/api/v2/pokemon");
-    box.put("hiveModel", HivePokemonModel.fromJson(res.data));
-    debugPrint(box.isEmpty ? "No Hive" : "Yes Hive");
-
-    return PokemonModel.fromJson(res.data);
+  Future<PokemonModel> getPokemon({required int index}) async {
+    Response pokemonRes = await Dio().get("https://pokeapi.co/api/v2/pokemon");
+    box.put("offlinePokemon", HivePokemonModel.fromJson(pokemonRes.data));
+    Response pokemonInfoRes =
+        await Dio().get("https://pokeapi.co/api/v2/pokemon/$index/");
+    box.put(
+      "offlinePokemonInfo",
+      List.generate(
+        20,
+        (e) => HivePokemonInfo(
+          id: pokemonInfoRes.data["id"].toString(),
+          name: pokemonInfoRes.data["name"].toString(),
+          imageUrl: pokemonInfoRes.data["sprites"]["front_default"].toString(),
+          height: pokemonInfoRes.data["height"].toString(),
+          weight: pokemonInfoRes.data["weight"].toString(),
+          category: pokemonInfoRes.data["types"][0]["type"]["name"],
+        )
+      ),
+    );
+    // List<HivePokemonInfo> ajdsh = box.get("offlinePokemonInfo");
+    debugPrint(box.get("offlinePokemonInfo").runtimeType.toString());
+    return PokemonModel.fromJson(pokemonRes.data);
   }
 
   Future<PokemonInfoModel> getInfoPokemon({required int index}) async {
     Response res = await Dio().get("https://pokeapi.co/api/v2/pokemon/$index/");
-    box.put(
-        "pokemonInfo",
-        HivePokemonInfo(
-                id: res.data["id"].toString(),
-                name: res.data["name"].toString(),
-                imageUrl: res.data["sprites"]["front_default"].toString(),
-                height: res.data["height"].toString(),
-                weight: res.data["weight"].toString(),
-                category: res.data["types"][0]["type"]["name"])
-            .toString());
-    print(box.get("hiveModel"));
+    // box.put(
+    //     "offlinePokemonInfo",
+    //     HivePokemonInfo(
+    //             id: res.data["id"].toString(),
+    //             name: res.data["name"].toString(),
+    //             imageUrl: res.data["sprites"]["front_default"].toString(),
+    //             height: res.data["height"].toString(),
+    //             weight: res.data["weight"].toString(),
+    //             category: res.data["types"][0]["type"]["name"])
+    //         .toString());
+    // print(box.get("offlinePokemonInfo"));
     return PokemonInfoModel.fromJson(res.data);
   }
 }
