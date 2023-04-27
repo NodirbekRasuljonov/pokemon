@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon/constants/color_const.dart';
-import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 import 'package:pokemon/home/offline_view/offline_pokemon_info_page.dart';
 import 'package:pokemon/home/online_view/online_pokemon_info_page.dart';
 
@@ -32,7 +30,7 @@ class _InfoPageState extends State<InfoPage> {
         .listen((InternetConnectionStatus status) {
       setState(() {
         widget.hasInternet = status == InternetConnectionStatus.connected;
-        print(
+        debugPrint(
             "INTERTEEEEEEEEEEEEEEEEEEE INFOOOOO PAGE   ${widget.hasInternet}");
       });
     });
@@ -60,5 +58,11 @@ class _InfoPageState extends State<InfoPage> {
               index: widget.index,
             ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 }

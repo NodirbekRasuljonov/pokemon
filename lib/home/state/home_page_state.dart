@@ -1,4 +1,3 @@
-import 'package:pokemon/home/view/home_page.dart';
 
 abstract class HomePageState {
   HomePageState();

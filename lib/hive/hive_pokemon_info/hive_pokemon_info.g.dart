@@ -8,7 +8,7 @@ part of 'hive_pokemon_info.dart';
 
 class HivePokemonInfoAdapter extends TypeAdapter<HivePokemonInfo> {
   @override
-  final int typeId = 3;
+  final int typeId = 2;
 
   @override
   HivePokemonInfo read(BinaryReader reader) {

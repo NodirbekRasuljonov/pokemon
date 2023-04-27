@@ -159,7 +159,7 @@ Positioned image(PokemonInfoModel pokemonInfo) {
     left: 25.w,
     right: 25.w,
     top: 25.h,
-    child: Container(
+    child: SizedBox(
       height: 220.h,
       width: 289.w,
       child: CachedNetworkImage(

@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 part 'hive_pokemon_info.g.dart';
-@HiveType(typeId: 3)
+@HiveType(typeId: 2)
 class HivePokemonInfo {
   @HiveField(0)
   String id;

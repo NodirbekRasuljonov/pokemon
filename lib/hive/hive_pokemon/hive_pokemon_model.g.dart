@@ -8,7 +8,7 @@ part of 'hive_pokemon_model.dart';
 
 class HivePokemonModelAdapter extends TypeAdapter<HivePokemonModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   HivePokemonModel read(BinaryReader reader) {
@@ -51,7 +51,7 @@ class HivePokemonModelAdapter extends TypeAdapter<HivePokemonModel> {
 
 class ResultsAdapter extends TypeAdapter<Results> {
   @override
-  final int typeId = 2;
+  final int typeId = 1;
 
   @override
   Results read(BinaryReader reader) {

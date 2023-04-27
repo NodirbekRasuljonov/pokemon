@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:pokemon/constants/color_const.dart';
 import 'package:pokemon/hive/hive_pokemon/hive_pokemon_model.dart';
-import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 
 Scaffold offlinePokemonPage(
     {required BuildContext context, required bool hasInternet}) {
@@ -16,7 +15,7 @@ Scaffold offlinePokemonPage(
     body: CustomScrollView(
       slivers: [
         appBar(),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Text("offline"),
         ),
         pokemons(

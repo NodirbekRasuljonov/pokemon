@@ -26,7 +26,10 @@ SliverGrid pokemons(
     itemBuilder: (context, index) => BlocConsumer<HomePageCubit, HomePageState>(
       builder: (context, state) {
         return FutureBuilder(
-          future: context.read<HomePageCubit>().getPokemon(index: index + 1),
+          future: 
+              context.read<HomePageCubit>().getPokemon(index: index + 1),
+          
+          
           builder: (context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
@@ -38,15 +41,11 @@ SliverGrid pokemons(
               PokemonModel data = snapshot.data;
               return GestureDetector(
                   onTap: () {
-                    
-                    print(index);
+                    debugPrint(index.toString());
                     Navigator.pushNamed(
                       context,
                       "/info",
-                      arguments: [
-                        index,
-                        hasInternet
-                      ],
+                      arguments: [index, hasInternet],
                     );
                   },
                   child: Container(

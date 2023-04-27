@@ -24,13 +24,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+
+
   void startMonitoringInternetConnection() {
     _subscription = InternetConnectionChecker()
         .onStatusChange
         .listen((InternetConnectionStatus status) {
       setState(() {
         hasInternet = status == InternetConnectionStatus.connected;
-        print("INTERTEEEEEEEEEEEEEEEEEEE HOMEEEE PAGE   $hasInternet");
+        debugPrint("INTERTEEEEEEEEEEEEEEEEEEE HOMEEEE PAGE   $hasInternet");
       });
     });
   }
@@ -48,5 +50,13 @@ class _HomePageState extends State<HomePage> {
                   child: Text("Please connect internet:$hasInternet"),
                 ),
     );
+  }
+
+
+  @override
+  void dispose() {
+
+    _subscription.cancel();
+    super.dispose();
   }
 }

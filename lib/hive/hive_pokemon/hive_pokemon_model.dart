@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'hive_pokemon_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class HivePokemonModel {
   @HiveField(0)
   int? count;
@@ -27,7 +27,7 @@ class HivePokemonModel {
     }
   }
 }
-@HiveType(typeId: 2)
+@HiveType(typeId: 1)
 class Results {
   @HiveField(0)
   String? name;
