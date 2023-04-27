@@ -7,7 +7,7 @@ import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 Padding offlinePokemonInfoPage({required int index}) {
   Box offlineBox = Hive.box("hive");
   HivePokemonInfo offlinePokemonInfo =
-      offlineBox.get("offlinePokemonInfo${index+1}");
+      offlineBox.get("offlinePokemonInfo${index + 1}");
   // return Padding(
   //   padding: EdgeInsets.all(30.h),
   //   child: Text(offlinePokemonInfo.id),
@@ -140,11 +140,10 @@ Positioned image({required HivePokemonInfo pokemonInfo}) {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.r),
           image: const DecorationImage(
-            image: AssetImage(
-              "assets/images/default.png",
-            ),
-            fit: BoxFit.cover
-          )),
+              image: AssetImage(
+                "assets/images/default.png",
+              ),
+              fit: BoxFit.cover)),
     ),
   );
 }

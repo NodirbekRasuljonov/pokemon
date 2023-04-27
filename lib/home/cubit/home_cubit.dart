@@ -19,25 +19,27 @@ class HomePageCubit extends Cubit<HomePageState> {
     Response pokemonRes = await Dio().get("https://pokeapi.co/api/v2/pokemon");
     box.put("offlinePokemon", HivePokemonModel.fromJson(pokemonRes.data));
 
-    Response pokemonInfoRes =
-        await Dio().get("https://pokeapi.co/api/v2/pokemon/$index/");
-    box.put(
-      "offlinePokemonInfo$index",
-      HivePokemonInfo(
-        id: pokemonInfoRes.data["id"].toString(),
-        name: pokemonInfoRes.data["name"].toString(),
-        imageUrl: pokemonInfoRes.data["sprites"]["front_default"].toString(),
-        height: pokemonInfoRes.data["height"].toString(),
-        weight: pokemonInfoRes.data["weight"].toString(),
-        category: pokemonInfoRes.data["types"][0]["type"]["name"],
-      ),
-    );
+    for (int i = 1; i < 21; i++) {
+      Response pokemonInfoRes =
+          await Dio().get("https://pokeapi.co/api/v2/pokemon/$i/");
+      box.put(
+        "offlinePokemonInfo$i",
+        HivePokemonInfo(
+          id: pokemonInfoRes.data["id"].toString(),
+          name: pokemonInfoRes.data["name"].toString(),
+          imageUrl: pokemonInfoRes.data["sprites"]["front_default"].toString(),
+          height: pokemonInfoRes.data["height"].toString(),
+          weight: pokemonInfoRes.data["weight"].toString(),
+          category: pokemonInfoRes.data["types"][0]["type"]["name"],
+        ),
+      );
+    }
     return PokemonModel.fromJson(pokemonRes.data);
   }
 
   Future<PokemonInfoModel> getInfoPokemon({required int index}) async {
     Response res =
-        await Dio().get("https://pokeapi.co/api/v2/pokemon/${index +1}/");
+        await Dio().get("https://pokeapi.co/api/v2/pokemon/${index + 1}/");
     return PokemonInfoModel.fromJson(res.data);
   }
 }
