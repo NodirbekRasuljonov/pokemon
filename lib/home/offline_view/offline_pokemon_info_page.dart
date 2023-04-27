@@ -140,7 +140,7 @@ Positioned image({required HivePokemonInfo pokemonInfo}) {
       width: 100.w,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.r),
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage(
               "assets/images/default.png",
             ),
