@@ -6,10 +6,13 @@ import 'package:pokemon/constants/color_const.dart';
 import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 
 Padding offlinePokemonInfoPage({required int index}) {
-  // return  Padding(padding: EdgeInsets.all(30.h),child: Text("Offline"),);
   Box offlineBox = Hive.box("hive");
   HivePokemonInfo offlinePokemonInfo =
-        offlineBox.getAt(1)[index];
+      offlineBox.get("offlinePokemonInfo${index + 1}");
+  // return Padding(
+  //   padding: EdgeInsets.all(30.h),
+  //   child: Text(offlinePokemonInfo.id),
+  // );
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
     child: Column(
@@ -20,8 +23,8 @@ Padding offlinePokemonInfoPage({required int index}) {
           child: Stack(
             children: [
               nameId(
-                  pokemonInfo: offlineBox.get("offlinePokemonInfo"),
-                  index: index),
+                pokemonInfo: offlinePokemonInfo,
+              ),
               Positioned(
                 bottom: 0.h,
                 left: 0.w,
@@ -45,24 +48,20 @@ Padding offlinePokemonInfoPage({required int index}) {
                             children: [
                               details(
                                   title: "Height",
-                                  value: offlinePokemonInfo.height
-                                  ),
+                                  value: offlinePokemonInfo.height),
                               details(
                                   title: "Weight",
-                                  value:offlinePokemonInfo.weight),
+                                  value: offlinePokemonInfo.weight),
                               details(
                                   title: "Category",
-                                  value: offlinePokemonInfo.category
-                                  ),
+                                  value: offlinePokemonInfo.category),
                             ],
                           ),
                         ),
                       ],
                     )),
               ),
-              image(
-                  pokemonInfo: offlineBox.get("offlinePokemonInfo"),
-                  index: index),
+              image(pokemonInfo: offlinePokemonInfo),
             ],
           ),
         )
@@ -100,8 +99,7 @@ Column details({required String title, required String value}) {
   );
 }
 
-Positioned nameId(
-    {required List<HivePokemonInfo> pokemonInfo, required int index}) {
+Positioned nameId({required HivePokemonInfo pokemonInfo}) {
   return Positioned(
     top: 80.h,
     left: 0.w,
@@ -110,9 +108,9 @@ Positioned nameId(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          int.parse(pokemonInfo[index].id) <= 9
-              ? "#00${pokemonInfo[index].id.toString()}"
-              : "#0${pokemonInfo[index].id.toString()}",
+          int.parse(pokemonInfo.id) <= 9
+              ? "#00${pokemonInfo.id.toString()}"
+              : "#0${pokemonInfo.id.toString()}",
           style: TextStyle(
             color: AppColorConst.kbackgroundColor,
             fontSize: 20.sp,
@@ -120,7 +118,7 @@ Positioned nameId(
           ),
         ),
         Text(
-          "${pokemonInfo[index].name[0].toUpperCase()}${pokemonInfo[index].name.substring(1)}",
+          "${pokemonInfo.name[0].toUpperCase()}${pokemonInfo.name.substring(1)}",
           style: TextStyle(
             color: AppColorConst.kBlackColor,
             fontSize: 20.sp,
@@ -132,19 +130,22 @@ Positioned nameId(
   );
 }
 
-Positioned image(
-    {required List<HivePokemonInfo> pokemonInfo, required int index}) {
+Positioned image({required HivePokemonInfo pokemonInfo}) {
   return Positioned(
-    left: 25.w,
-    right: 25.w,
-    top: 25.h,
+    left: 100.w,
+    right: 100.w,
+    top: 100.h,
     child: Container(
-      height: 220.h,
-      width: 289.w,
-      child: CachedNetworkImage(
-        imageUrl: pokemonInfo[index].imageUrl.toString(),
-        fit: BoxFit.contain,
-      ),
+      height: 130.h,
+      width: 100.w,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.r),
+          image: DecorationImage(
+            image: AssetImage(
+              "assets/images/default.png",
+            ),
+            fit: BoxFit.cover
+          )),
     ),
   );
 }
