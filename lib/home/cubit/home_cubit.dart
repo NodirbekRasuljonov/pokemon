@@ -32,7 +32,7 @@ class HomePageCubit extends Cubit<HomePageState> {
       ),
     );
     // List<HivePokemonInfo> ajdsh = box.get("offlinePokemonInfo");
-    debugPrint(box.get("offlinePokemonInfo").runtimeType.toString());
+    debugPrint(box.get("offlinePokemonInfo").length.toString());
     return PokemonModel.fromJson(pokemonRes.data);
   }
 

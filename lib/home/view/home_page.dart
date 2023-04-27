@@ -20,33 +20,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool hasInternet = true;
+  bool hasInternet = false;
+  late StreamSubscription<InternetConnectionStatus> _subscription;
 
   @override
   void initState() {
-    InternetConnectionChecker().onStatusChange.listen((status) {
-      final hasInternet = status == InternetConnectionStatus.connected;
-      setState(() => this.hasInternet = hasInternet);
-    });
     super.initState();
+    startMonitoringInternetConnection();
   }
 
-    Box offlineBox = Hive.box("hive");           
+  void startMonitoringInternetConnection() {
+    _subscription = InternetConnectionChecker()
+        .onStatusChange
+        .listen((InternetConnectionStatus status) {
+      setState(() {
+        hasInternet = status == InternetConnectionStatus.connected;
+        print(hasInternet);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _subscription.cancel();
+  }
+
+  Box offlineBox = Hive.box("hive");
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColorConst.kWhiteColor,
       body: hasInternet
-          ? onlinePokemonPage(context)
+          ? onlinePokemonPage(context: context)
           : offlineBox.isNotEmpty
-              ? offlinePokemonPage(context)
-              :const Center(
-                  child: Text("PLease connect internet"),
+              ? offlinePokemonPage(context: context)
+              :  Center(
+                  child: Text("Please connect internet:$hasInternet"),
                 ),
     );
   }
-
-
- 
 }

@@ -5,29 +5,35 @@ import 'package:pokemon/constants/color_const.dart';
 import 'package:pokemon/hive/hive_pokemon/hive_pokemon_model.dart';
 import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 
-Scaffold offlinePokemonPage(BuildContext context) {
+Scaffold offlinePokemonPage(
+    {required BuildContext context}) {
   Box offlineBox = Hive.box("hive");
 
-  List<HivePokemonInfo> offlineData = offlineBox.get("offlinePokemon");
+  HivePokemonModel offlineData = offlineBox.get("offlinePokemon");
 
   return Scaffold(
     body: CustomScrollView(
       slivers: [
         appBar(),
-        pokemons(context: context, offlineData: offlineData),
+        pokemons(
+            context: context,
+            offlineData: offlineData,
+            ),
       ],
     ),
   );
 }
 
-SliverGrid pokemons(
-    {required BuildContext context,
-    required List<HivePokemonInfo> offlineData}) {
+SliverGrid pokemons({
+  required BuildContext context,
+  required HivePokemonModel offlineData,
+}) {
   return SliverGrid.builder(
     itemCount: 20,
     itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/info", arguments: index + 1);
+          Navigator.pushNamed(context, "/info",
+              arguments: index + 1);
         },
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
@@ -53,7 +59,7 @@ SliverGrid pokemons(
                 height: 10.h,
               ),
               Text(
-                "${offlineData[index].name[0].toUpperCase()}${offlineData[index].name.substring(1)}",
+                "${offlineData.results![index].name![0].toUpperCase()}${offlineData.results![index].name!.substring(1)}",
                 style: TextStyle(
                   color: AppColorConst.kWhiteColor,
                   fontSize: 20.sp,

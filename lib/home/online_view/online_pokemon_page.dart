@@ -8,7 +8,8 @@ import 'package:pokemon/home/cubit/home_cubit.dart';
 import 'package:pokemon/home/state/home_page_state.dart';
 import 'package:pokemon/model/pokemon_model.dart';
 
-Scaffold onlinePokemonPage(BuildContext context) {
+Scaffold onlinePokemonPage({required BuildContext context,}) {
+
   return Scaffold(
     backgroundColor: AppColorConst.kWhiteColor,
     body: CustomScrollView(
