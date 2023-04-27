@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon/constants/color_const.dart';
@@ -8,26 +6,27 @@ import 'package:pokemon/home/cubit/home_cubit.dart';
 import 'package:pokemon/home/state/home_page_state.dart';
 import 'package:pokemon/model/pokemon_model.dart';
 
-Scaffold onlinePokemonPage({required BuildContext context,}) {
-
+Scaffold onlinePokemonPage(
+    {required BuildContext context, required bool hasInternet}) {
   return Scaffold(
     backgroundColor: AppColorConst.kWhiteColor,
     body: CustomScrollView(
       slivers: [
         appBar(),
-        pokemons(context: context),
+        pokemons(context: context, hasInternet: hasInternet),
       ],
     ),
   );
 }
 
-SliverGrid pokemons({required BuildContext context}) {
+SliverGrid pokemons(
+    {required BuildContext context, required bool hasInternet}) {
   return SliverGrid.builder(
     itemCount: 20,
     itemBuilder: (context, index) => BlocConsumer<HomePageCubit, HomePageState>(
       builder: (context, state) {
         return FutureBuilder(
-          future: context.read<HomePageCubit>().getPokemon(index: index+1),
+          future: context.read<HomePageCubit>().getPokemon(index: index + 1),
           builder: (context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
@@ -39,7 +38,16 @@ SliverGrid pokemons({required BuildContext context}) {
               PokemonModel data = snapshot.data;
               return GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, "/info", arguments: index + 1);
+                    
+                    print(index);
+                    Navigator.pushNamed(
+                      context,
+                      "/info",
+                      arguments: [
+                        index,
+                        hasInternet
+                      ],
+                    );
                   },
                   child: Container(
                     margin:
@@ -55,7 +63,7 @@ SliverGrid pokemons({required BuildContext context}) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          index < 9 ? "#00${index + 1}" : "#0${index + 1}",
+                          index <= 9 ? "#00${index + 1}" : "#0${index + 1}",
                           style: TextStyle(
                             color: AppColorConst.kWhiteColor,
                             fontSize: 20.sp,

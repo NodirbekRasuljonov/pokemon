@@ -9,7 +9,8 @@ class AppRoute {
       case "/info":
         return MaterialPageRoute(
           builder: (context) {
-            return InfoPage(index: args as int);
+            args as List;
+            return InfoPage(index: args[0],hasInternet: args[1], );
           },
         );
       case "/home":

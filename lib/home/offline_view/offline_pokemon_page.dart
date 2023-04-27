@@ -6,34 +6,42 @@ import 'package:pokemon/hive/hive_pokemon/hive_pokemon_model.dart';
 import 'package:pokemon/hive/hive_pokemon_info/hive_pokemon_info.dart';
 
 Scaffold offlinePokemonPage(
-    {required BuildContext context}) {
+    {required BuildContext context, required bool hasInternet}) {
   Box offlineBox = Hive.box("hive");
 
   HivePokemonModel offlineData = offlineBox.get("offlinePokemon");
 
   return Scaffold(
+    backgroundColor: AppColorConst.kWhiteColor,
     body: CustomScrollView(
       slivers: [
         appBar(),
+        SliverToBoxAdapter(
+          child: Text("offline"),
+        ),
         pokemons(
             context: context,
             offlineData: offlineData,
-            ),
+            hasInternet: hasInternet),
       ],
     ),
   );
 }
 
-SliverGrid pokemons({
-  required BuildContext context,
-  required HivePokemonModel offlineData,
-}) {
+SliverGrid pokemons(
+    {required BuildContext context,
+    required HivePokemonModel offlineData,
+    required bool hasInternet}) {
   return SliverGrid.builder(
     itemCount: 20,
     itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/info",
-              arguments: index + 1);
+
+          Navigator.pushNamed(
+            context,
+            "/info",
+            arguments: [index, hasInternet],
+          );
         },
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
