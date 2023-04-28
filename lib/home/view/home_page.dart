@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           : offlineBox.isNotEmpty
               ? offlinePokemonPage(context: context, hasInternet: hasInternet)
               : Center(
-                  child: Text("Please connect internet:$hasInternet"),
+                  child: Text("Please connect internet:"),
                 ),
     );
   }
