@@ -10,10 +10,10 @@ import 'package:pokemon/routes/app_routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await Hive.openBox('hive');
   Hive.registerAdapter(HivePokemonModelAdapter());
   Hive.registerAdapter(ResultsAdapter());
   Hive.registerAdapter(HivePokemonInfoAdapter());
-  Box box = await Hive.openBox("hive");
 
   runApp(
     MultiBlocProvider(
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         AppRoute route = AppRoute();
         return MaterialApp(
+        
           restorationScopeId: "root",
           onGenerateRoute: route.onGenerateRoute,
           initialRoute: "/home",

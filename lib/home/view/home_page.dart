@@ -17,9 +17,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool hasInternet = true;
   late StreamSubscription<InternetConnectionStatus> _subscription;
+  late Box box;
 
   @override
-  void initState() {
+  void initState() async {
     startMonitoringInternetConnection();
     super.initState();
   }
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Box offlineBox = Hive.box("hive");
+  Box offlineBox = Hive.box('hive');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
