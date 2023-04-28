@@ -30,8 +30,7 @@ class _InfoPageState extends State<InfoPage> {
         .listen((InternetConnectionStatus status) {
       setState(() {
         widget.hasInternet = status == InternetConnectionStatus.connected;
-        debugPrint(
-            "INTERTEEEEEEEEEEEEEEEEEEE INFOOOOO PAGE   ${widget.hasInternet}");
+       
       });
     });
   }

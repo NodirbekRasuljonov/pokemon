@@ -15,9 +15,21 @@ Scaffold offlinePokemonPage(
     body: CustomScrollView(
       slivers: [
         appBar(),
-        const SliverToBoxAdapter(
-          child: Text("offline"),
-        ),
+        SliverToBoxAdapter(
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.signal_wifi_off_outlined,
+              ),
+              SizedBox(
+                width: 20.w,
+              ),
+              const Text("No internet connection")
+            ],
+          ),
+        )),
         pokemons(
             context: context,
             offlineData: offlineData,
@@ -35,7 +47,6 @@ SliverGrid pokemons(
     itemCount: 20,
     itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-
           Navigator.pushNamed(
             context,
             "/info",

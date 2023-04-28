@@ -24,15 +24,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
-
   void startMonitoringInternetConnection() {
     _subscription = InternetConnectionChecker()
         .onStatusChange
         .listen((InternetConnectionStatus status) {
       setState(() {
         hasInternet = status == InternetConnectionStatus.connected;
-        debugPrint("INTERTEEEEEEEEEEEEEEEEEEE HOMEEEE PAGE   $hasInternet");
       });
     });
   }
@@ -45,17 +42,15 @@ class _HomePageState extends State<HomePage> {
       body: hasInternet
           ? onlinePokemonPage(context: context, hasInternet: hasInternet)
           : offlineBox.isNotEmpty
-              ? offlinePokemonPage(context: context,hasInternet: hasInternet)
+              ? offlinePokemonPage(context: context, hasInternet: hasInternet)
               : Center(
                   child: Text("Please connect internet:$hasInternet"),
                 ),
     );
   }
 
-
   @override
   void dispose() {
-
     _subscription.cancel();
     super.dispose();
   }
