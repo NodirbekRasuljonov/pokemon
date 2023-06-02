@@ -47,7 +47,7 @@ class _InfoPageState extends State<InfoPage> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Pokemon Info:${widget.hasInternet}",
+          "Pokemon Info",
           style: TextStyle(color: AppColorConst.kWhiteColor),
         ),
       ),

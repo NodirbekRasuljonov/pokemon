@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   late Box box;
 
   @override
-  void initState() async {
+  void initState()  {
     startMonitoringInternetConnection();
     super.initState();
   }
